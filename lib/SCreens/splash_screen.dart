@@ -1,5 +1,4 @@
 import 'dart:async';
-
 import 'package:e_commerce_ui/SCreens/homescreen.dart';
 import 'package:e_commerce_ui/SCreens/onboarding_screen.dart';
 import 'package:flutter/material.dart';
@@ -17,12 +16,14 @@ class _SplashScreenState extends State<SplashScreen> {
     // TODO: implement initState
     super.initState();
     Timer(
-        Duration(seconds: 3),
-        () => Navigator.push(
-            context,
-            MaterialPageRoute(
-              builder: (context) => OnboardingScreen(),
-            )));
+      Duration(seconds: 3),
+      () => Navigator.push(
+        context,
+        MaterialPageRoute(
+          builder: (context) => OnboardingScreen(),
+        ),
+      ),
+    );
   }
 
   @override
