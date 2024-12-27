@@ -1,4 +1,5 @@
 import 'package:e_commerce_ui/SCreens/login_screen.dart';
+import 'package:e_commerce_ui/SCreens/navigation_screen.dart';
 import 'package:e_commerce_ui/SCreens/onboarding_screen.dart';
 import 'package:e_commerce_ui/SCreens/splash_screen.dart';
 import 'package:flutter/material.dart';
@@ -18,7 +19,7 @@ class MyApp extends StatelessWidget {
       theme: ThemeData(
         primaryColor: Color(0xFFEF6969),
       ),
-      home: LoginScreen(),
+      home: NavigationScreen(),
     );
   }
 }

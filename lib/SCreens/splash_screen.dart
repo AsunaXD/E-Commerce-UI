@@ -1,5 +1,5 @@
 import 'dart:async';
-import 'package:e_commerce_ui/SCreens/homescreen.dart';
+import 'package:e_commerce_ui/SCreens/home_screen.dart';
 import 'package:e_commerce_ui/SCreens/onboarding_screen.dart';
 import 'package:flutter/material.dart';
 
