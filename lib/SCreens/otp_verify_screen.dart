@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:sms_otp_auto_verify/sms_otp_auto_verify.dart';
+// import 'package:sms_otp_auto_verify/sms_otp_auto_verify.dart';
 
 class OtpVerifyScreen extends StatefulWidget {
   const OtpVerifyScreen({super.key});
@@ -63,21 +63,21 @@ class _OtpVerifyScreenState extends State<OtpVerifyScreen> {
               SizedBox(
                 height: 20,
               ),
-              TextFieldPin(
-                  textController: textEditingController,
-                  autoFocus: false,
-                  codeLength: 4,
-                  alignment: MainAxisAlignment.center,
-                  defaultBoxSize: 55.0,
-                  margin: 10,
-                  selectedBoxSize: 55.0,
-                  textStyle: TextStyle(fontSize: 16),
-                  defaultDecoration: _pinPutDecoration.copyWith(
-                      border: Border.all(color: Colors.grey)),
-                  selectedDecoration: _pinPutDecoration,
-                  onChange: (code) {
-                    setState(() {});
-                  }),
+              // TextFieldPin(
+              //     textController: textEditingController,
+              //     autoFocus: false,
+              //     codeLength: 4,
+              //     alignment: MainAxisAlignment.center,
+              //     defaultBoxSize: 55.0,
+              //     margin: 10,
+              //     selectedBoxSize: 55.0,
+              //     textStyle: TextStyle(fontSize: 16),
+              //     defaultDecoration: _pinPutDecoration.copyWith(
+              //         border: Border.all(color: Colors.grey)),
+              //     selectedDecoration: _pinPutDecoration,
+              //     onChange: (code) {
+              //       setState(() {});
+              //     }),
               SizedBox(
                 height: 40,
               ),
