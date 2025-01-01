@@ -1,3 +1,4 @@
+import 'package:e_commerce_ui/SCreens/prdouct_screen.dart';
 import 'package:flutter/material.dart';
 
 class Homescreen extends StatelessWidget {
@@ -165,7 +166,14 @@ class Homescreen extends StatelessWidget {
                               child: Stack(
                                 children: [
                                   InkWell(
-                                    onTap: () {},
+                                    onTap: () {
+                                      Navigator.push(
+                                        context,
+                                        MaterialPageRoute(
+                                          builder: (context) => PrdouctScreen(),
+                                        ),
+                                      );
+                                    },
                                     child: ClipRRect(
                                       borderRadius: BorderRadius.circular(10),
                                       child: Image.asset(
@@ -261,7 +269,7 @@ class Homescreen extends StatelessWidget {
                   physics: NeverScrollableScrollPhysics(),
                   gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
                     crossAxisCount: 2,
-                    childAspectRatio: 0.65,
+                    childAspectRatio: 0.6,
                     // crossAxisSpacing: 2,
                   ),
                   itemBuilder: (context, index) {
@@ -273,17 +281,24 @@ class Homescreen extends StatelessWidget {
                         crossAxisAlignment: CrossAxisAlignment.start,
                         children: [
                           SizedBox(
-                            height: 200,
+                            height: 220,
                             child: Stack(
                               children: [
                                 InkWell(
-                                  onTap: () {},
+                                  onTap: () {
+                                    Navigator.push(
+                                      context,
+                                      MaterialPageRoute(
+                                        builder: (context) => PrdouctScreen(),
+                                      ),
+                                    );
+                                  },
                                   child: ClipRRect(
                                     borderRadius: BorderRadius.circular(10),
                                     child: Image.asset(
                                       imageList[index],
                                       width: 200,
-                                      height: 200,
+                                      height: 220,
                                       fit: BoxFit.cover,
                                     ),
                                   ),
