@@ -33,7 +33,6 @@ class PrdouctScreen extends StatelessWidget {
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: [
                     Column(
-                      mainAxisAlignment: MainAxisAlignment.start,
                       children: [
                         SizedBox(
                           height: 30,
@@ -49,10 +48,7 @@ class PrdouctScreen extends StatelessWidget {
                         SizedBox(
                           height: 5,
                         ),
-                        Text(
-                          "Hoodie Jacket",
-                          style: Font,
-                        )
+                        Text("Hoodie Jacket"),
                       ],
                     )
                   ],
