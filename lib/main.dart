@@ -20,7 +20,7 @@ class MyApp extends StatelessWidget {
       theme: ThemeData(
         primaryColor: Color(0xFFEF6969),
       ),
-      home: NavigationScreen(),
+      home: OnboardingScreen(),
     );
   }
 }
