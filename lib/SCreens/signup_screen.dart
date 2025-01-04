@@ -1,5 +1,6 @@
 import 'package:e_commerce_ui/SCreens/home_screen.dart';
 import 'package:e_commerce_ui/SCreens/login_screen.dart';
+import 'package:e_commerce_ui/SCreens/navigation_screen.dart';
 import 'package:e_commerce_ui/SCreens/signup_screen.dart';
 import 'package:flutter/material.dart';
 
@@ -100,7 +101,7 @@ class SignupScreen extends StatelessWidget {
                           Navigator.push(
                             context,
                             MaterialPageRoute(
-                              builder: (context) => Homescreen(),
+                              builder: (context) => NavigationScreen(),
                             ),
                           );
                         },

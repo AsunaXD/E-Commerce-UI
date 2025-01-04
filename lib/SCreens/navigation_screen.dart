@@ -2,6 +2,7 @@ import 'package:animated_bottom_navigation_bar/animated_bottom_navigation_bar.da
 import 'package:e_commerce_ui/SCreens/cart_screen.dart';
 import 'package:e_commerce_ui/SCreens/favourits_screen.dart';
 import 'package:e_commerce_ui/SCreens/home_screen.dart';
+import 'package:e_commerce_ui/SCreens/prdouct_screen.dart';
 import 'package:e_commerce_ui/SCreens/profile_screen.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';

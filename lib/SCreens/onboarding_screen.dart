@@ -1,4 +1,5 @@
 import 'package:e_commerce_ui/SCreens/home_screen.dart';
+import 'package:e_commerce_ui/SCreens/login_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:introduction_screen/introduction_screen.dart';
 
@@ -57,7 +58,7 @@ class OnboardingScreen extends StatelessWidget {
                 Navigator.push(
                     context,
                     MaterialPageRoute(
-                      builder: (context) => Homescreen(),
+                      builder: (context) => LoginScreen(),
                     ));
               },
               child: Text("Lets Shop"),

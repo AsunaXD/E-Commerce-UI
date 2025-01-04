@@ -1,3 +1,5 @@
+import 'package:e_commerce_ui/SCreens/cart_screen.dart';
+import 'package:e_commerce_ui/SCreens/home_screen.dart';
 import 'package:e_commerce_ui/SCreens/login_screen.dart';
 import 'package:e_commerce_ui/SCreens/navigation_screen.dart';
 import 'package:e_commerce_ui/SCreens/onboarding_screen.dart';
