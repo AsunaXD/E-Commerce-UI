@@ -1,3 +1,4 @@
+import 'dart:async';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
@@ -7,13 +8,7 @@ class CartScreen extends StatefulWidget {
 }
 
 class _CartScreenState extends State<CartScreen> {
-  List<bool> selectedItems = [
-    false,
-    false,
-    false,
-    false
-  ]; // Track checkbox state
-
+  List<bool> selectedItems = [false, false, false, false];
   List imagesList = [
     "images/image1.jpg",
     "images/image2.jpg",
@@ -24,20 +19,58 @@ class _CartScreenState extends State<CartScreen> {
     "Warm Zippers",
     "Knitted Wool",
     "Zipper Win",
-    "Child Win",
+    "Child Win"
   ];
-  List<double> prices = [
-    300,
-    550,
-    65,
-    100,
-  ];
-  // List to track the quantity of each item
-  List<int> quantities = [1, 1, 1, 1]; // Corrected the tracking of quantities
+  List<double> prices = [300, 550, 65, 100];
+  List<int> quantities = [1, 1, 1, 1];
+
+  Timer? _decreaseTimer;
+  Timer? _increaseTimer;
+
+  // Calculate the total price
+  double getTotalPrice() {
+    double total = 0.0;
+    for (int i = 0; i < prices.length; i++) {
+      total += prices[i] * quantities[i];
+    }
+    return total;
+  }
+
+//Decreasing logic for Minus Icon
+  void startRapidDecrease(int index) {
+    _decreaseTimer = Timer.periodic(Duration(milliseconds: 100), (timer) {
+      if (quantities[index] > 1) {
+        setState(() {
+          quantities[index]--;
+        });
+      } else {
+        timer.cancel();
+      }
+    });
+  }
+
+//Increasing logic for Added Icon
+  void stopRapidDecrease() {
+    _decreaseTimer?.cancel();
+  }
+
+  void startRapidIncrease(int index) {
+    _increaseTimer = Timer.periodic(Duration(milliseconds: 100), (timer) {
+      setState(() {
+        quantities[index]++;
+      });
+    });
+  }
+
+  void stopRapidIncrease() {
+    _increaseTimer?.cancel();
+  }
+
+  @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text("Cart "),
+        title: Text("Cart"),
         leading: BackButton(),
         backgroundColor: Colors.transparent,
         foregroundColor: Colors.black,
@@ -51,7 +84,7 @@ class _CartScreenState extends State<CartScreen> {
             children: [
               ListView.builder(
                 itemCount: imagesList.length,
-                shrinkWrap: true, // Shrinks the list to fit content
+                shrinkWrap: true,
                 physics: NeverScrollableScrollPhysics(),
                 itemBuilder: (context, index) {
                   double totalPrice = prices[index] * quantities[index];
@@ -63,7 +96,7 @@ class _CartScreenState extends State<CartScreen> {
                         Checkbox(
                           splashRadius: 20,
                           activeColor: Color(0xFFEF6969),
-                          value: selectedItems[index], // Use dynamic state
+                          value: selectedItems[index],
                           onChanged: (val) {
                             setState(() {
                               selectedItems[index] = val!;
@@ -71,18 +104,15 @@ class _CartScreenState extends State<CartScreen> {
                           },
                         ),
                         ClipRRect(
-                          borderRadius:
-                              BorderRadius.circular(10), // Rounded corners
+                          borderRadius: BorderRadius.circular(10),
                           child: Image.asset(
                             imagesList[index],
-                            height: 80,
+                            height: 95,
                             width: 80,
-                            fit: BoxFit
-                                .cover, // Set a fixed height for the images
+                            fit: BoxFit.cover,
                           ),
                         ),
                         Column(
-                          mainAxisAlignment: MainAxisAlignment.end,
                           crossAxisAlignment: CrossAxisAlignment.start,
                           children: [
                             Text(
@@ -93,22 +123,15 @@ class _CartScreenState extends State<CartScreen> {
                                 fontWeight: FontWeight.w900,
                               ),
                             ),
-                            SizedBox(
-                              height: 10,
-                            ),
+                            SizedBox(height: 10),
                             Text(
                               "Hoodie Jacket",
                               style: TextStyle(
-                                color: Colors.black26,
-                                fontSize: 16,
-                              ),
+                                  color: Colors.black26, fontSize: 16),
                             ),
-                            SizedBox(
-                              height: 10,
-                            ),
-                            // Display the formatted price as a string with the currency symbol
+                            SizedBox(height: 10),
                             Text(
-                              "\$${totalPrice.toStringAsFixed(2)}", // Format the price to 2 decimal places
+                              "\$${totalPrice.toStringAsFixed(2)}",
                               style: TextStyle(
                                 fontSize: 18,
                                 fontWeight: FontWeight.bold,
@@ -123,18 +146,23 @@ class _CartScreenState extends State<CartScreen> {
                               onTap: () {
                                 setState(() {
                                   if (quantities[index] > 1) {
-                                    quantities[index]--; // Decrease quantity
+                                    quantities[index]--;
                                   }
                                 });
                               },
+                              onLongPress: () {
+                                startRapidDecrease(index);
+                              },
+                              onLongPressUp: () {
+                                stopRapidDecrease();
+                              },
                               child: Icon(
                                 CupertinoIcons.minus,
+                                size: 20,
                                 color: Colors.green,
                               ),
                             ),
-                            SizedBox(
-                              width: 8,
-                            ),
+                            SizedBox(width: 8),
                             Text(
                               quantities[index].toString(),
                               style: TextStyle(
@@ -142,28 +170,40 @@ class _CartScreenState extends State<CartScreen> {
                                 fontWeight: FontWeight.w700,
                               ),
                             ),
-                            SizedBox(
-                              width: 6,
-                            ),
+                            SizedBox(width: 6),
                             GestureDetector(
-                                onTap: () {
-                                  setState(() {
-                                    quantities[index]++; // Increase quantity
-                                  });
-                                },
-                                child: Icon(
-                                  CupertinoIcons.plus,
-                                  color: Colors.red,
-                                )),
-                            // SizedBox(
-                            //   width: 8,
-                            // ),
+                              onTap: () {
+                                setState(() {
+                                  quantities[index]++;
+                                });
+                              },
+                              onLongPress: () {
+                                startRapidIncrease(index);
+                              },
+                              onLongPressUp: () {
+                                stopRapidIncrease();
+                              },
+                              child: Icon(
+                                CupertinoIcons.plus,
+                                size: 20,
+                                color: Colors.red,
+                              ),
+                            ),
                           ],
                         ),
                       ],
                     ),
                   );
                 },
+              ),
+              SizedBox(height: 20),
+              Text(
+                "Total: \$${getTotalPrice().toStringAsFixed(2)}",
+                style: TextStyle(
+                  fontSize: 20,
+                  fontWeight: FontWeight.bold,
+                  color: Colors.black,
+                ),
               ),
             ],
           ),
