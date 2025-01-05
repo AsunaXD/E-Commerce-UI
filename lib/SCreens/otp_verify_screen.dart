@@ -85,7 +85,7 @@ class _OtpVerifyScreenState extends State<OtpVerifyScreen> {
                 focusedPinTheme: focusedPinTheme,
                 submittedPinTheme: submittedPinTheme,
                 validator: (s) {
-                  return s == '2222'
+                  return s == ''
                       ? null
                       : 'Pin is incorrect'; // Example validation
                 },
