@@ -1,4 +1,6 @@
 import 'dart:async';
+import 'package:e_commerce_ui/SCreens/payment_screen.dart';
+import 'package:e_commerce_ui/widgets/container_button_model.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
@@ -8,7 +10,13 @@ class CartScreen extends StatefulWidget {
 }
 
 class _CartScreenState extends State<CartScreen> {
-  List<bool> selectedItems = [false, false, false, false];
+  List<bool> selectedItems = [
+    false,
+    false,
+    false,
+    false
+  ]; // Track individual checkboxes
+  bool isSelectAll = false; // **Highlighted**: Track "Select All" state
   List imagesList = [
     "images/image1.jpg",
     "images/image2.jpg",
@@ -31,12 +39,15 @@ class _CartScreenState extends State<CartScreen> {
   double getTotalPrice() {
     double total = 0.0;
     for (int i = 0; i < prices.length; i++) {
-      total += prices[i] * quantities[i];
+      if (selectedItems[i]) {
+        // **Highlighted**: Include only selected items
+        total += prices[i] * quantities[i];
+      }
     }
     return total;
   }
 
-//Decreasing logic for Minus Icon
+  // Decreasing logic for Minus Icon
   void startRapidDecrease(int index) {
     _decreaseTimer = Timer.periodic(Duration(milliseconds: 100), (timer) {
       if (quantities[index] > 1) {
@@ -49,7 +60,7 @@ class _CartScreenState extends State<CartScreen> {
     });
   }
 
-//Increasing logic for Added Icon
+  // Increasing logic for Added Icon
   void stopRapidDecrease() {
     _decreaseTimer?.cancel();
   }
@@ -66,6 +77,22 @@ class _CartScreenState extends State<CartScreen> {
     _increaseTimer?.cancel();
   }
 
+  // **Highlighted**: Toggle "Select All" state
+  void toggleSelectAll(bool? value) {
+    setState(() {
+      isSelectAll = value ?? false;
+      selectedItems = List<bool>.filled(selectedItems.length, isSelectAll);
+    });
+  }
+
+  // **Highlighted**: Update "Select All" based on individual checkboxes
+  void toggleIndividualCheckbox(int index, bool? value) {
+    setState(() {
+      selectedItems[index] = value ?? false;
+      isSelectAll = selectedItems.every((item) => item); // Update "Select All"
+    });
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -79,7 +106,7 @@ class _CartScreenState extends State<CartScreen> {
       ),
       body: SingleChildScrollView(
         child: Padding(
-          padding: const EdgeInsets.all(20),
+          padding: const EdgeInsets.all(10),
           child: Column(
             children: [
               ListView.builder(
@@ -97,11 +124,8 @@ class _CartScreenState extends State<CartScreen> {
                           splashRadius: 20,
                           activeColor: Color(0xFFEF6969),
                           value: selectedItems[index],
-                          onChanged: (val) {
-                            setState(() {
-                              selectedItems[index] = val!;
-                            });
-                          },
+                          onChanged: (val) => toggleIndividualCheckbox(
+                              index, val), // **Highlighted**
                         ),
                         ClipRRect(
                           borderRadius: BorderRadius.circular(10),
@@ -196,15 +220,79 @@ class _CartScreenState extends State<CartScreen> {
                   );
                 },
               ),
-              SizedBox(height: 20),
-              Text(
-                "Total: \$${getTotalPrice().toStringAsFixed(2)}",
-                style: TextStyle(
-                  fontSize: 20,
-                  fontWeight: FontWeight.bold,
-                  color: Colors.black,
+              SizedBox(
+                height: 10,
+              ),
+              Row(
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                children: [
+                  Text(
+                    "Select All",
+                    style: TextStyle(
+                      fontSize: 16,
+                      fontWeight: FontWeight.w500,
+                    ),
+                  ),
+                  Checkbox(
+                    splashRadius: 20,
+                    activeColor: Color(0xFFEF6969),
+                    value: isSelectAll, // **Highlighted**
+                    onChanged: toggleSelectAll, // **Highlighted**
+                  ),
+                ],
+              ),
+              Divider(
+                height: 10,
+                thickness: 1.2,
+                color: Colors.black,
+              ),
+              Row(
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                children: [
+                  Text(
+                    "TotalPayment: ",
+                    style: TextStyle(
+                      fontSize: 20,
+                      fontWeight: FontWeight.bold,
+                      color: Colors.black,
+                    ),
+                  ),
+                  Text(
+                    "\$${getTotalPrice().toStringAsFixed(2)}",
+                    style: TextStyle(
+                      fontSize: 20,
+                      fontWeight: FontWeight.bold,
+                      color:
+                          Color(0xFFEF6969), // Updated color for total amount
+                    ),
+                  ),
+                ],
+              ),
+              SizedBox(
+                height: 20,
+              ),
+              InkWell(
+                onTap: () {
+                  Navigator.push(
+                    context,
+                    MaterialPageRoute(
+                      builder: (context) => PaymentScreen(
+                        totalAmount: getTotalPrice(), // Calculate total amount
+                        selectedProducts:
+                            selectedItems, // Pass selected product details
+                      ),
+                    ),
+                  );
+                },
+                child: ContainerButtonModel(
+                  itext: "Checkout",
+                  containerWidth: MediaQuery.of(context).size.width,
+                  bgColor: Color(0xFFEF6969),
                 ),
               ),
+              SizedBox(
+                height: 20,
+              )
             ],
           ),
         ),

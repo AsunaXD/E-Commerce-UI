@@ -2,10 +2,13 @@ import 'package:animated_bottom_navigation_bar/animated_bottom_navigation_bar.da
 import 'package:e_commerce_ui/SCreens/cart_screen.dart';
 import 'package:e_commerce_ui/SCreens/favourits_screen.dart';
 import 'package:e_commerce_ui/SCreens/home_screen.dart';
-import 'package:e_commerce_ui/SCreens/prdouct_screen.dart';
+import 'package:e_commerce_ui/SCreens/product_screen.dart';
 import 'package:e_commerce_ui/SCreens/profile_screen.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+
+// Highlighted import for QR scanner
+// import 'package:flutter_barcode_scanner/flutter_barcode_scanner.dart';
 
 class NavigationScreen extends StatefulWidget {
   const NavigationScreen({super.key});
@@ -23,6 +26,29 @@ class _NavigationScreenState extends State<NavigationScreen> {
     ProfileScreen(),
   ];
 
+  // // Highlighted: Function to handle QR scanning
+  // Future<void> _startQRScanner() async {
+  //   try {
+  //     final scanResult = await FlutterBarcodeScanner.scanBarcode(
+  //       '#ff6666', // Color of the scanning line
+  //       'Cancel', // Cancel button text
+  //       true, // Show flash icon
+  //       ScanMode.QR, // Scan mode (QR)
+  //     );
+
+  //     if (scanResult != '-1') {
+  //       // Handle scanned result if not canceled
+  //       ScaffoldMessenger.of(context).showSnackBar(
+  //         SnackBar(content: Text('Scanned: $scanResult')),
+  //       );
+  //     }
+  //   } catch (e) {
+  //     ScaffoldMessenger.of(context).showSnackBar(
+  //       SnackBar(content: Text('Error scanning: $e')),
+  //     );
+  //   }
+  // }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -32,7 +58,7 @@ class _NavigationScreenState extends State<NavigationScreen> {
       ),
       floatingActionButton: SafeArea(
         child: FloatingActionButton(
-          onPressed: () {},
+          onPressed: () {}, // Highlighted: Updated onPressed
           shape: CircleBorder(),
           child: Icon(
             Icons.qr_code,
@@ -50,7 +76,6 @@ class _NavigationScreenState extends State<NavigationScreen> {
           CupertinoIcons.heart,
           CupertinoIcons.profile_circled,
         ],
-        // splashColor: ,
         inactiveColor: Colors.black.withOpacity(0.5),
         activeColor: Color(0xFFEF6969),
         gapLocation: GapLocation.center,

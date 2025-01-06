@@ -1,16 +1,18 @@
-import 'package:e_commerce_ui/SCreens/prdouct_screen.dart';
+import 'package:e_commerce_ui/SCreens/product_screen.dart';
 import 'package:flutter/material.dart';
 
 class Homescreen extends StatelessWidget {
   List tabs = ["All", "Categories", "Top", "Recommended"];
   List imageList = [
-    "images/image1.jpg",
+    "images/king.png",
     "images/image2.jpg",
-    "images/image3.jpg",
+    "images/sameer.png",
+
+    // "images/image3.jpg",
     "images/image4.jpg",
   ];
   List productTitles = [
-    "Warm Zippers",
+    "Majdor King",
     "Knitted Wool",
     "Zipper Win",
     "Child Win",
@@ -170,7 +172,7 @@ class Homescreen extends StatelessWidget {
                                       Navigator.push(
                                         context,
                                         MaterialPageRoute(
-                                          builder: (context) => PrdouctScreen(),
+                                          builder: (context) => ProductScreen(),
                                         ),
                                       );
                                     },
@@ -289,7 +291,7 @@ class Homescreen extends StatelessWidget {
                                     Navigator.push(
                                       context,
                                       MaterialPageRoute(
-                                        builder: (context) => PrdouctScreen(),
+                                        builder: (context) => ProductScreen(),
                                       ),
                                     );
                                   },
