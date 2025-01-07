@@ -3,7 +3,10 @@ import 'package:e_commerce_ui/widgets/container_button_model.dart';
 import 'package:flutter/material.dart';
 
 class ProductDetailsPopup extends StatelessWidget {
-  final iStyle = TextStyle(
+  final String name; // Add this
+  final double price; // Add this
+
+  final TextStyle iStyle = const TextStyle(
     color: Colors.black87,
     fontSize: 18,
     fontWeight: FontWeight.w600,
@@ -16,6 +19,11 @@ class ProductDetailsPopup extends StatelessWidget {
     Colors.amberAccent,
   ];
 
+  ProductDetailsPopup({
+    required this.name, // Initialize in constructor
+    required this.price, // Initialize in constructor
+  });
+
   @override
   Widget build(BuildContext context) {
     return InkWell(
@@ -24,90 +32,85 @@ class ProductDetailsPopup extends StatelessWidget {
           backgroundColor: Colors.transparent,
           context: context,
           builder: (context) {
-            // State management for the bottom sheet
-            String selectedSize = "M"; // Default selected size
-            Color selectedColor = clrs[0]; // Default selected color
-            int quantity = 1; // Default quantity
-            double pricePerItem = 40.0; // Price of a single item
+            String selectedSize = "M";
+            Color selectedColor = clrs[0];
+            int quantity = 1;
 
             return StatefulBuilder(
-              builder: (context, setState) => Container(
-                height: MediaQuery.of(context).size.height / 2.5,
-                decoration: BoxDecoration(
-                  color: Colors.white,
-                  borderRadius: BorderRadius.only(
-                    topLeft: Radius.circular(30),
-                    topRight: Radius.circular(30),
+              builder: (context, setState) {
+                return Container(
+                  height: MediaQuery.of(context).size.height / 2.32,
+                  decoration: BoxDecoration(
+                    color: Colors.white,
+                    borderRadius: const BorderRadius.only(
+                      topLeft: Radius.circular(30),
+                      topRight: Radius.circular(30),
+                    ),
                   ),
-                ),
-                child: Padding(
-                  padding: const EdgeInsets.all(30),
-                  child: Column(
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: [
-                      Row(
-                        crossAxisAlignment: CrossAxisAlignment.start,
-                        children: [
-                          Column(
-                            crossAxisAlignment: CrossAxisAlignment.start,
-                            children: [
-                              SizedBox(
-                                height: 10,
+                  child: Padding(
+                    padding: const EdgeInsets.all(30),
+                    child: Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        // Display Product Name and Price
+                        Row(
+                          children: [
+                            Text(
+                              name, // Use the dynamic product name
+                              style: const TextStyle(
+                                fontSize: 22,
+                                fontWeight: FontWeight.bold,
+                                color: Colors.black87,
                               ),
-                              Text(
-                                "Size:",
-                                style: iStyle,
+                            ),
+                            const SizedBox(width: 130),
+                            Text(
+                              "\$${price.toStringAsFixed(2)}", // Use the dynamic price
+                              style: const TextStyle(
+                                fontSize: 20,
+                                fontWeight: FontWeight.bold,
+                                color: Color(0xFFEF6969),
                               ),
-                              SizedBox(
-                                height: 20,
-                              ),
-                              Text(
-                                "Color:",
-                                style: iStyle,
-                              ),
-                              SizedBox(
-                                height: 20,
-                              ),
-                              Text(
-                                "Quantity:",
-                                style: iStyle,
-                              ),
-                              SizedBox(
-                                height: 20,
-                              ),
-                              // Text(
-                              //   "Total:",
-                              //   style: iStyle,
-                              // ),
-                              SizedBox(
-                                height: 20,
-                              ),
-                            ],
-                          ),
-                          SizedBox(
-                            width: 20,
-                          ),
-                          Column(
-                            mainAxisAlignment: MainAxisAlignment.start,
-                            crossAxisAlignment: CrossAxisAlignment.start,
-                            children: [
-                              // Size Selection
-                              Row(
-                                children: [
-                                  for (var size in ["S", "M", "L", "XL"])
-                                    Padding(
-                                      padding: const EdgeInsets.symmetric(
-                                          horizontal: 4),
-                                      child: GestureDetector(
+                            ),
+                          ],
+                        ),
+                        const SizedBox(height: 20),
+
+                        // Size, Color, Quantity Selection
+                        Row(
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          children: [
+                            Column(
+                              crossAxisAlignment: CrossAxisAlignment.start,
+                              children: [
+                                Text("Size:", style: iStyle),
+                                const SizedBox(height: 20),
+                                Text("Color:", style: iStyle),
+                                const SizedBox(height: 20),
+                                Text("Quantity:", style: iStyle),
+                              ],
+                            ),
+                            const SizedBox(width: 0),
+                            Column(
+                              crossAxisAlignment: CrossAxisAlignment.start,
+                              children: [
+                                // Size Selection
+                                Row(
+                                  children: List.generate(
+                                    ["S", "M", "L", "XL"].length,
+                                    (index) {
+                                      String size =
+                                          ["S", "M", "L", "XL"][index];
+                                      return GestureDetector(
                                         onTap: () {
                                           setState(() {
                                             selectedSize = size;
                                           });
                                         },
                                         child: Container(
-                                          margin: EdgeInsets.symmetric(
+                                          margin: const EdgeInsets.symmetric(
                                               horizontal: 5),
-                                          padding: EdgeInsets.all(8),
+                                          padding: const EdgeInsets.all(8),
                                           decoration: BoxDecoration(
                                             border: Border.all(
                                               color: selectedSize == size
@@ -127,26 +130,23 @@ class ProductDetailsPopup extends StatelessWidget {
                                             ),
                                           ),
                                         ),
-                                      ),
-                                    ),
-                                ],
-                              ),
-                              SizedBox(
-                                height: 16,
-                              ),
-                              // Color Selection
-                              Row(
-                                children: [
-                                  for (var i = 0; i < clrs.length; i++)
-                                    GestureDetector(
+                                      );
+                                    },
+                                  ),
+                                ),
+                                const SizedBox(height: 6),
+                                // Color Selection
+                                Row(
+                                  children: List.generate(clrs.length, (i) {
+                                    return GestureDetector(
                                       onTap: () {
                                         setState(() {
                                           selectedColor = clrs[i];
                                         });
                                       },
                                       child: Container(
-                                        margin:
-                                            EdgeInsets.symmetric(horizontal: 5),
+                                        margin: const EdgeInsets.symmetric(
+                                            horizontal: 5),
                                         height: 28,
                                         width: 28,
                                         decoration: BoxDecoration(
@@ -160,83 +160,83 @@ class ProductDetailsPopup extends StatelessWidget {
                                               BorderRadius.circular(20),
                                         ),
                                       ),
+                                    );
+                                  }),
+                                ),
+                                const SizedBox(height: 10),
+                                // Quantity Selector
+                                Row(
+                                  children: [
+                                    IconButton(
+                                      icon: const Icon(Icons.remove),
+                                      onPressed: () {
+                                        setState(() {
+                                          if (quantity > 1) quantity--;
+                                        });
+                                      },
                                     ),
-                                ],
-                              ),
-                              SizedBox(
-                                height: 10,
-                              ),
-                              // Quantity Selection with + and -
-                              Row(
-                                children: [
-                                  IconButton(
-                                    icon: Icon(Icons.remove),
-                                    onPressed: () {
-                                      setState(() {
-                                        if (quantity > 1) quantity--;
-                                      });
-                                    },
-                                  ),
-                                  Text(
-                                    '$quantity',
-                                    style: iStyle,
-                                  ),
-                                  IconButton(
-                                    icon: Icon(Icons.add),
-                                    onPressed: () {
-                                      setState(() {
-                                        quantity++;
-                                      });
-                                    },
-                                  ),
-                                ],
-                              ),
-                            ],
-                          ),
-                        ],
-                      ),
-                      // Total Payment Calculation
-                      // SizedBox(
-                      //   height: 8,
-                      // ),
-                      Row(
-                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                        children: [
-                          Text(
-                            "Total Payment",
-                            style: iStyle,
-                          ),
-                          Text(
-                            "\$${(quantity * pricePerItem).toStringAsFixed(2)}",
-                            style: TextStyle(
-                              fontSize: 18,
-                              fontWeight: FontWeight.bold,
-                              color: Color(0xFFEF6969),
+                                    Text(
+                                      '$quantity',
+                                      style: iStyle,
+                                    ),
+                                    IconButton(
+                                      icon: const Icon(Icons.add),
+                                      onPressed: () {
+                                        setState(() {
+                                          quantity++;
+                                        });
+                                      },
+                                    ),
+                                  ],
+                                ),
+                              ],
                             ),
-                          ),
-                        ],
-                      ),
-                      SizedBox(
-                        height: 10,
-                      ),
-                      InkWell(
-                        onTap: () {
-                          Navigator.push(
+                          ],
+                        ),
+                        SizedBox(
+                          height: 10,
+                        ),
+                        // Total Payment
+                        Row(
+                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                          children: [
+                            Text("Total Payment", style: iStyle),
+                            Text(
+                              "\$${(quantity * price).toStringAsFixed(2)}",
+                              style: const TextStyle(
+                                fontSize: 18,
+                                fontWeight: FontWeight.bold,
+                                color: Color(0xFFEF6969),
+                              ),
+                            ),
+                          ],
+                        ),
+                        const SizedBox(height: 10),
+                        // Checkout Button
+                        InkWell(
+                          onTap: () {
+                            Navigator.push(
                               context,
                               MaterialPageRoute(
-                                builder: (context) => CartScreen(),
-                              ));
-                        },
-                        child: ContainerButtonModel(
-                          containerWidth: MediaQuery.of(context).size.width,
-                          itext: "Checkout",
-                          bgColor: Color(0xFFEF6969),
+                                builder: (context) => CartScreen(
+                                    // selectedSize: selectedSize,
+                                    // selectedColor: selectedColor,
+                                    // quantity: quantity,
+                                    ),
+                              ),
+                            );
+                          },
+                          child: ContainerButtonModel(
+                            containerWidth: MediaQuery.of(context).size.width,
+                            itext: "Checkout",
+                            bgColor: const Color(0xFFEF6969),
+                          ),
                         ),
-                      ),
-                    ],
+                      ],
+                    ),
                   ),
-                ),
-              ),
+                );
+              },
             );
           },
         );
@@ -244,7 +244,7 @@ class ProductDetailsPopup extends StatelessWidget {
       child: ContainerButtonModel(
         containerWidth: MediaQuery.of(context).size.width / 1.5,
         itext: "Buy Now",
-        bgColor: Color(0xFFEF6969),
+        bgColor: const Color(0xFFEF6969),
       ),
     );
   }

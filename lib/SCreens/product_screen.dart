@@ -143,7 +143,10 @@ class ProductScreen extends StatelessWidget {
                         ),
                       ),
                     ),
-                    ProductDetailsPopup(),
+                    ProductDetailsPopup(
+                      name: name, // Pass the product name
+                      price: price, // Pass the product price
+                    ),
                   ],
                 ),
               ],
