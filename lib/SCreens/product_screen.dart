@@ -5,13 +5,19 @@ import 'package:flutter_rating_bar/flutter_rating_bar.dart';
 import '../widgets/product_details_popup.dart';
 
 class ProductScreen extends StatelessWidget {
-  List<String> images = [
-    // "images/image1.jpg",
-    "images/king.png",
-    "images/image2.jpg",
-    "images/sameer.png",
-    "images/image4.jpg",
-  ];
+  // Define the required fields as final variables
+  final String name;
+  final String description;
+  final double price;
+  final List<String> images;
+
+  // Constructor to accept the product details
+  ProductScreen({
+    required this.name,
+    required this.description,
+    required this.price,
+    required this.images,
+  });
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -36,9 +42,11 @@ class ProductScreen extends StatelessWidget {
                   width: MediaQuery.of(context).size.width,
                   child: FanCarouselImageSlider.sliderType1(
                     sliderHeight: 430,
-                    imagesLink: images,
+                    imagesLink: images, // Dynamically passed images
                     isAssets: true,
                     autoPlay: true,
+                    initalPageIndex:
+                        images.isNotEmpty ? 0 : 0, // Set a valid initial index
                   ),
                 ),
                 Row(
@@ -51,7 +59,7 @@ class ProductScreen extends StatelessWidget {
                           height: 30,
                         ),
                         Text(
-                          "Warm Zipper",
+                          name, // Dynamically passed name
                           style: TextStyle(
                             color: Colors.black87,
                             fontWeight: FontWeight.w900,
@@ -71,7 +79,7 @@ class ProductScreen extends StatelessWidget {
                       ],
                     ),
                     Text(
-                      "\$300.00",
+                      "\$${price.toStringAsFixed(2)}", // Dynamically passed price
                       style: TextStyle(
                         color: Color(0xFFEF6969),
                         fontSize: 25,
